@@ -1,67 +1,57 @@
 def halfPyramid(num):
-    result = ""
+    pattern = []
     for i in range(num):
-        for j in range(i + 1):
-            result += '*'
-        result += '\n'
-    return result
+        line = '*' * (i + 1)
+        pattern.append(line)
+    return pattern
 
 def invertedHalfPyramid(num):
-    result = ""
+    pattern = []
     for i in range(num):
-        for j in range(i, num):
-            result += '*'
-        result += '\n'
-    return result
+        line = '*' * (num - i)
+        pattern.append(line)
+    return pattern
 
 def fullPyramid(num):
-    result = ""
+    pattern = []
     for i in range(num):
-        for x in range(num - i - 1):
-            result += ' '
-        for j in range(i + 1):
-            result += '* '
-        result += '\n'
-    return result
+        line = ' ' * (num - i - 1) + '* ' * (i + 1)
+        pattern.append(line)
+    return pattern
 
 def invertedFullPyramid(num):
-    result = ""
+    pattern = []
     for i in range(num):
-        for x in range(i):
-            result += ' '
-        for j in range(num - i):
-            result += '* '
-        result += '\n'
-    return result
+        line = ' ' * i + '* ' * (num - i)
+        pattern.append(line)
+    return pattern
 
 def triangleStar(num):
-    result = ""
+    pattern = []
     space = 2 * num - 2
     for i in range(num):
-        for j in range(space):
-            result += " "
-        space = space - 2
-        for j in range(i + 1):
-            result += "* "
-        result += '\n'
-    return result
+        line = ' ' * space + '* ' * (i + 1)
+        space -= 2
+        pattern.append(line)
+    return pattern
 
-def generatePyramids():
-    return halfPyramid, invertedHalfPyramid, fullPyramid, invertedFullPyramid, triangleStar
+def generatePatterns(num):
+    patterns = {
+        "halfPyramid": halfPyramid(num),
+        "invertedHalfPyramid": invertedHalfPyramid(num),
+        "fullPyramid": fullPyramid(num),
+        "invertedFullPyramid": invertedFullPyramid(num),
+        "triangleStar": triangleStar(num)
+    }
+    return patterns
+
+def printPatterns(patterns):
+    for name, pattern in patterns.items():
+        print(name)
+        for line in pattern:
+            print(line)
+        print('-----------------------')
 
 num = int(input("Enter a number: "))
-
-print('Half Pyramid:')
-print(halfPyramid(num))
-print('-----------------------')
-print('Inverted Half Pyramid:')
-print(invertedHalfPyramid(num))
-print('-----------------------')
-print('Full Pyramid:')
-print(fullPyramid(num))
-print('-----------------------')
-print('Inverted Full Pyramid:')
-print(invertedFullPyramid(num))
-print('-----------------------')
-print('Triangle Star:')
-print(triangleStar(num))
+patterns = generatePatterns(num)
+printPatterns(patterns)

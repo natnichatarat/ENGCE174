@@ -1,61 +1,50 @@
-def halfpyramid(n):
-    n = int(n)  
-    if n > 0:
-        halfpyramid(n - 1)
-        print('* ' * n)
+def halfpyramid(n, current=1):
+    if current > n:
+        return []
+    return halfpyramid(n, current + 1) + ['* ' * current]
 
-def invertedHalfPyramid(n):
-    n = int(n)  
-    if n > 0:
-        print('* ' * n)
-        invertedHalfPyramid(n - 1)
+def invertedHalfPyramid(n, current=1):
+    if current > n:
+        return []
+    return ['* ' * (n - current + 1)] + invertedHalfPyramid(n, current + 1)
 
 def fullPyramid(n, current=1):
-    n = int(n)  
     if current > n:
-        return
+        return []
     spaces = ' ' * (n - current)
     stars = '* ' * current
-    print(spaces + stars)
-    fullPyramid(n, current + 1)
+    return fullPyramid(n, current + 1) + [spaces + stars]
 
 def invertedFullPyramid(n, current=1):
-    n = int(n)  
     if current > n:
-        return
+        return []
     spaces = ' ' * (current - 1)
     stars = '* ' * (n - current + 1)
-    print(spaces + stars)
-    invertedFullPyramid(n, current + 1)
+    return [spaces + stars] + invertedFullPyramid(n, current + 1)
 
-def inver(n, current=1):
-    n = int(n) 
+def invertedPyramid(n, current=1):
     if current > n:
-        return
+        return []
     spaces = ' ' * (n - current)
-    stars = '*' * (current)
-    print(spaces + stars)
-    inver(n, current + 1)
+    stars = '*' * current
+    return invertedPyramid(n, current + 1) + [spaces + stars]
 
+def generatePatterns(n):
+    return {
+        "Half Pyramid": halfpyramid(n),
+        "Inverted Half Pyramid": invertedHalfPyramid(n),
+        "Full Pyramid": fullPyramid(n),
+        "Inverted Full Pyramid": invertedFullPyramid(n),
+        "Inverted Pyramid": invertedPyramid(n)
+    }
 
-n = input("Enter a number: ")
+def printPatterns(patterns):
+    for name, pattern in patterns.items():
+        print(name)
+        for line in pattern:
+            print(line)
+        print('-----------------------')
 
-
-print("Half Pyramid:")
-halfpyramid(n)
-print('-----------------------')
-
-print("Inverted Half Pyramid:")
-invertedHalfPyramid(n)
-print('-----------------------')
-
-print("Full Pyramid:")
-fullPyramid(n)
-print('-----------------------')
-
-print("Inverted Full Pyramid:")
-invertedFullPyramid(n)
-print('-----------------------')
-
-print("Inverted Pyramid:")
-inver(n)
+n = int(input("Enter a number: "))
+patterns = generatePatterns(n)
+printPatterns(patterns)
